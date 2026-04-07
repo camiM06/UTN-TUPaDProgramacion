@@ -266,3 +266,248 @@ while True:
         print("saliendo del sistema")
     break
 
+# EJERCICIO 4 ESCAPE ROOM LA BOVEDA
+#//////////////////////////////////
+
+energia = 100
+
+tiempo = 12
+
+cerraduras_abiertas = 0
+
+alarma = False
+
+codigo_parcial = ""
+
+opcion_anterior = ""
+
+repetidas = 0
+
+nombre = input("ingrese nombre del agente: ").strip().lower()
+
+if not nombre.isalpha():
+    nombre = input("nombre invalido, ingrese nombre del agente: ").strip().lower()
+
+
+
+while not alarma and energia > 0 and tiempo > 0 and cerraduras_abiertas < 3:
+
+        opcion = input("tenes que abrir tres cerraduras antes que se te agote el tiempo o la energia! elegi lo que vas a hacer: \n1- forzar cerradura \n2- hackear panel \n3- descansar ").strip()
+    
+        while opcion not in ("1", "2", "3"):
+            opcion = input("opcion invalida. elegi lo que vas a hacer: \n1- forzar cerradura \n2- hackear panel \n3- descansar ").strip()
+
+        opcion = int(opcion)
+
+
+        if opcion == opcion_anterior : # aca busque ayudar porque no sabia como hacer para que corte el bucle si se elegia 3 veces la misma opcion
+            repetidas += 1
+        else:
+            repetidas = 1
+            opcion_anterior = opcion
+        
+        if repetidas == 3:
+            alarma = True
+
+        
+        if opcion == 1 and repetidas != 3:
+                energia = energia - 20
+                print(f" tu energia bajo a {energia}")
+                tiempo = tiempo - 2
+                print(f"tu tiempo bajo a {tiempo}")
+                cerraduras_abiertas += 1
+                print(f"abriste 1 cerradura, tenes {cerraduras_abiertas} cerraduras abiertas")
+                if energia < 40:
+                    riesgo_alarma =input("riesgo de alarma! elige un numero del 1 al 3 para intentar abrir la cerradura").strip()
+                    while riesgo_alarma not in ("1", "2", "3"):
+                        riesgo_alarma =input("opcion invalida. elige un numero del 1 al 3 para intentar abrir la cerradura").strip()
+
+                    riesgo_alarma = int(riesgo_alarma)
+
+                    if riesgo_alarma == 1:
+                        cerraduras_abiertas += 1
+                        print(f"abriste una cerradura, tenes {cerraduras_abiertas} cerraduras abiertas")
+                        energia = energia - 20
+                        print(f" tu energia bajo a {energia}")
+                        tiempo = tiempo - 2
+                        print(f"tu tiempo bajo a {tiempo}")
+                    elif riesgo_alarma == 2:
+                        cerraduras_abiertas+= 1
+                        print(f"abriste una cerradura, tenes {cerraduras_abiertas} cerraduras abiertas")
+                        energia = energia - 20
+                        print(f" tu energia bajo a {energia}")
+                        tiempo = tiempo - 2
+                        print(f"tu tiempo bajo a {tiempo}")
+                
+                    elif riesgo_alarma == 3:
+                        alarma = True
+                
+                if cerraduras_abiertas == 3:
+                    print("¡abriste todas las cerraduras, mision exitosa! felicitaciones!")
+                    break
+
+
+        if opcion == 2:
+            energia = energia - 10
+            print(f" tu energia bajo a {energia}")
+            tiempo = tiempo - 3
+            print(f"tu tiempo bajo a {tiempo}")  
+        
+
+            for i in range (4):
+                letra = input("para hackear el sistema de seguridad, ingresa de a una letra: ").strip()
+             
+                # aca busque un poco de ayuda en como armar esta variable para poder contar las letras que ingresa el usuario
+
+                while len(letra) != 1 or not letra.isalpha():
+                    letra = input("Error, ingrese solo una letra para escribir el codigo: ").strip()
+
+                codigo_parcial += letra
+
+
+            if len(codigo_parcial) >= 8:
+                cerraduras_abiertas += 1
+                print(f"abriste una cerradura, tenes {cerraduras_abiertas} cerraduras abiertas")
+
+            if cerraduras_abiertas >= 3:
+                print("¡abriste todas las cerraduras, mision exitosa! felicitaciones!")
+                break
+            
+            
+            if len(codigo_parcial) < 8:
+                print("aun faltan letras para abrir la cerradura")
+
+        if opcion == 3:
+            
+            tiempo = tiempo - 1
+            print(f"tomas un descanso, tu tiempo bajo a {tiempo}")
+
+            if energia < 40:
+                energia = energia - 10
+                print(f"riesgo de alarma activo, tu energia bajo a {energia}")
+            elif energia >= 40:
+                energia = energia + 15
+                print(f" tu energia subio a {energia}")
+            
+            if energia <= 0:
+                print("¡te quedaste sin energia! fracasaste en la mision!")
+                break
+
+if alarma == True:
+    print("¡¡se activo la alarma!! el sistema se bloqueo. Fracaste en la mision!")
+
+elif tiempo <= 3 and cerraduras_abiertas < 3:
+    print("¡¡te quedaste sin tiempo!! fracaste en la mision!")
+
+# EJERCICIO 2 ACCESO AL CAMPUS Y MENU SEGURO
+#///////////////////////////////////////////
+
+usuario = "alumno"
+
+clave = "python123"
+
+cont = 1
+
+usuario = input("ingrese su usuario: ").strip().lower()
+
+
+while usuario != "alumno" and cont < 3:
+    usuario = input("usuario incorrecto. ingrese su usuario: ").strip().lower()
+    cont += 1
+if usuario != "alumno":
+    print("demasiados intentos. cuenta bloqueada") 
+else:
+    clave = input("ingrese la clave para ingresar: ")
+    cont = 1
+    while clave != "python123" and cont < 3:
+        clave = input("clave incorrecta. ingrese su clave: ").strip().lower()
+        cont += 1
+    if clave != "python123":
+        print("demasiados intentos. cuenta bloqueada") 
+    else:
+        while True:
+
+            opcion = input("ingrese una opcion: 1) estado 2) cambiar clave 3) mensaje 4) salir: ").strip()
+
+            while not opcion.isdigit() or opcion not in ("1", "2", "3", "4"): 
+                opcion = input("ingrese una opcion correcta: 1) estado 2) cambiar clave 3) mensaje 4) salir: ").strip()   
+            opcion = int(opcion)
+        
+            if opcion == 1:
+                print("inscripto")
+                
+
+            if opcion == 2:
+                clave = input("la nueva clave debe tener 6 caracteres minimmo. ingrese su nueva clave: ").strip()
+                while len(clave) < 6:
+                    clave = input("la nueva clave debe tener 6 caracteres minimo. ingrese una nueva clave: ").strip()
+                else:
+                    confirmacion= input("ingrese de nuevo la clave para confirmar: ").strip()
+                
+                while confirmacion != clave:
+                    confirmacion= input("las claves no coinciden. ingrese de nuevo la clave para confirmar: ").strip() 
+                else:
+                    print("la nueva clave se guardo correctamente.")
+
+            if opcion == 3:
+                print("´en medio de la dificultad, reside la oportunidad´. albert einstein.")
+
+            if opcion == 4: 
+                print("esta saliendo del campus.")
+                break
+            
+# EJERCICIO 1 CAJA DEL KIOSCO 
+
+nombre = input("ingrese el nombre del cliente: ").strip() # en la consigna piden que validemos con isalpha pero me toma como false nombre y apellido
+
+while not nombre.isalpha():
+    nombre = input("ingrese un nombre valido: ")
+if nombre == "":
+    nombre = input("ingrese un nombre valido: ")
+
+
+cantidad_productos = (input("ingrese la cantidad de productos a adquirir: ")).strip()
+
+while not cantidad_productos.isdigit():
+    cantidad_productos =input("ingrese una cantidad valida: ")
+if int(cantidad_productos) <= 0 or cantidad_productos == "":
+    cantidad_productos =input("ingrese una cantidad valida: ")
+
+cantidad_productos = int(cantidad_productos)
+
+total_sin_desc = 0
+
+total_con_desc = 0
+
+
+for i in range (1, cantidad_productos+1):
+    precio = input(f"ingrese el valor del articulo {i}: ").strip()
+    while not precio.isdigit():
+        precio = input("ingrese un valor valido: ")
+    if precio == "" or int(precio) <= 0:
+        precio = input("ingrese un valor valido: ")
+    precio = int(precio)
+    total_sin_desc += precio
+    descuento = input("¿tiene descuento? ingrese S por si y N por no: ").strip().lower()
+    while descuento != "s" and descuento != "n":
+        descuento = input("opcion no valida. ingrese S por si y N por no: ").strip().lower()
+    if descuento == "s":
+        total_con_desc += precio * 0.90
+    else:
+        total_con_desc += precio
+    print(f"articulo {i} / precio {precio} / descuento {descuento}")
+
+ahorro = total_sin_desc - total_con_desc
+
+promedio = total_con_desc / cantidad_productos
+
+print(f" cliente: {nombre}")
+print(f"cantidad de productos: {cantidad_productos}")
+print(f"total sin descuento: {total_sin_desc:.2f}")
+print(f"total con descuento: {total_con_desc:.2f}")
+print(f"ahorro total: {ahorro:.2f} ")
+print(f" promedio de descuento por articulo: {promedio:.2f}")
+
+
+
+
